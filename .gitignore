@@ -4,3 +4,7 @@ node_modules/
 dist/
 .jsii
 tsconfig.*
+
+lerna-debug.log
+
+packages/.DS_Store

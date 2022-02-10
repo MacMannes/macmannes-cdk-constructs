@@ -2,8 +2,6 @@
   "name": "macmannes-cdk-constructs",
   "private": true,
   "devDependencies": {
-    "jsii": "^1.53.0",
-    "jsii-pacmak": "^1.53.0",
     "lerna": "^4.0.0"
   }
 }
