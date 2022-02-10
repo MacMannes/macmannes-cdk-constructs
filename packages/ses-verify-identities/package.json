@@ -1,0 +1,45 @@
+{
+  "name": "@macmannes/ses-verify-identities",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "jsii",
+    "watch": "jsii -w",
+    "package": "jsii-pacmak -v",
+    "test": "jest",
+    "lint": "eslint lib test --ext .ts"
+  },
+  "jsii": {
+    "outdir": "../../dist",
+    "targets": {}
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/node": "10.17.27",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "aws-cdk-lib": "2.10.0",
+    "constructs": "^10.0.0",
+    "eslint": "^7.19.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jest": "^26.1.0",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.2.0",
+    "typescript": "~3.9.7"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "2.10.0",
+    "constructs": "^10.0.0"
+  },
+  "author": {
+    "name": "MacMannes"
+  },
+  "repository": {
+    "type": "GIT",
+    "url": "https://github.com/MacMannes/macmannes-cdk-constructs"
+  },
+  "license": "MIT"
+
+}
