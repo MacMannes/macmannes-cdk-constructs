@@ -35,15 +35,16 @@
     "@typescript-eslint/parser": "^5.11.0",
     "aws-cdk-lib": "2.10.0",
     "constructs": "10.0.59",
+    "esbuild": "^0.14.21",
     "eslint": "^7.19.0",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^26.1.0",
     "jest": "^26.4.2",
-    "ts-jest": "^26.2.0",
-    "typescript": "~3.9.7",
     "jsii": "1.52.1",
-    "jsii-pacmak": "1.52.1"
+    "jsii-pacmak": "1.52.1",
+    "ts-jest": "^26.2.0",
+    "typescript": "~3.9.7"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.10.0",

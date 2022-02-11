@@ -198,6 +198,7 @@ export class EmailForwardingRule extends Construct {
     });
   }
 
+  // TODO: Run 'esbuild lambda/index.ts --bundle --platform=node --target=node12 --external:aws-sdk --outfile=lambda/build/index.js' automatically
   private createLambdaForwarderFunction(
     forwardMappingParameter: StringParameter,
     props: EmailForwardingRuleProps,
@@ -207,7 +208,7 @@ export class EmailForwardingRule extends Construct {
     return new Function(this, 'EmailForwardingFunction', {
       runtime: Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      code: Code.fromAsset(path.join(__dirname, 'lambda')),
+      code: Code.fromAsset(path.join(__dirname, 'lambda/build')),
       timeout: Duration.seconds(30),
       memorySize: 512,
       environment: {
