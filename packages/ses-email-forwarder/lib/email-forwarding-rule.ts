@@ -84,8 +84,15 @@ export interface EmailForwardingRuleProps {
  * The Lambda function is using the NPM package `aws-lambda-ses-forwarder` to forward the mails.
  */
 export class EmailForwardingRule extends Construct {
+  readonly id: string;
+  readonly domainName: string;
+  readonly lambdaFunction: Function | undefined;
+
   constructor(parent: Construct, name: string, props: EmailForwardingRuleProps) {
     super(parent, name);
+
+    this.id = props.id;
+    this.domainName = props.domainName;
 
     const forwardMapping = this.convertForwardMappingToMap(props);
 
@@ -97,8 +104,11 @@ export class EmailForwardingRule extends Construct {
       const s3Action = this.createS3Action(bucket, bucketPrefix);
       receiptRule.addAction(s3Action);
 
-      const lambdaAction = this.createLambdaForwarderAction(props, forwardMapping, bucket, bucketPrefix);
+      const forwarderFunction = this.createLambdaForwarderFunction(props, forwardMapping, bucket, bucketPrefix);
+      const lambdaAction = this.createLambdaForwarderAction(forwarderFunction);
       receiptRule.addAction(lambdaAction);
+
+      this.lambdaFunction = forwarderFunction;
     }
   }
 
@@ -149,16 +159,24 @@ export class EmailForwardingRule extends Construct {
   }
 
   private createLambdaForwarderAction(
+    forwarderFunction: Function,
+  ) {
+    return new actions.Lambda({
+      invocationType: actions.LambdaInvocationType.EVENT,
+      function: forwarderFunction,
+    });
+  }
+
+  private createLambdaForwarderFunction(
     props: EmailForwardingRuleProps,
-    forwardMapping: { [key: string]: string[] },
-    bucket: Bucket,
-    bucketPrefix: string,
+    forwardMapping: { [p: string]: string[] },
+    bucket: Bucket, bucketPrefix: string,
   ) {
     const forwardMappingParameter = new StringParameter(this, 'ForwardEmailMapping', {
       parameterName: `/ses-email-forwarding/${props.id}/mapping`,
       stringValue: JSON.stringify(forwardMapping),
     });
-    const forwarderFunction = this.createLambdaForwarderFunction(forwardMappingParameter, props, bucket, bucketPrefix);
+    const forwarderFunction = this.createNodeJsFunction(forwardMappingParameter, props, bucket, bucketPrefix);
     forwarderFunction.addToRolePolicy(
       new PolicyStatement({
         actions: [
@@ -191,15 +209,11 @@ export class EmailForwardingRule extends Construct {
         ],
       }),
     );
-
-    return new actions.Lambda({
-      invocationType: actions.LambdaInvocationType.EVENT,
-      function: forwarderFunction,
-    });
+    return forwarderFunction;
   }
 
   // TODO: Run 'esbuild lambda/index.ts --bundle --platform=node --target=node12 --external:aws-sdk --outfile=lambda/build/index.js' automatically
-  private createLambdaForwarderFunction(
+  private createNodeJsFunction(
     forwardMappingParameter: StringParameter,
     props: EmailForwardingRuleProps,
     bucket: Bucket,

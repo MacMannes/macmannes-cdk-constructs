@@ -87,6 +87,12 @@ export interface EmailForwardingRuleSetProps {
   readonly emailForwardingProps: EmailForwardingProps[];
 }
 
+export interface EmailForwardingMapping {
+  readonly emailForwardingRule: EmailForwardingRule,
+  readonly verifySesDomain: VerifySesDomain | undefined,
+  readonly verifySesEmailAddresses: VerifySesEmailAddress[] | undefined
+}
+
 /**
  * A construct for AWS SES to forward all emails of certain domains and email addresses to a list of target email addresses.
  * It also verifies (or at least initiates verification of) the related domains and email addresses in SES.
@@ -102,7 +108,7 @@ export interface EmailForwardingRuleSetProps {
  */
 export class EmailForwardingRuleSet extends Construct {
   readonly ruleSet: IReceiptRuleSet;
-  readonly emailForwardingMappings: any[] = [
+  readonly emailForwardingMappings: EmailForwardingMapping[] = [
   ];
 
   constructor(parent: Construct, name: string, props: EmailForwardingRuleSetProps) {
@@ -137,7 +143,7 @@ export class EmailForwardingRuleSet extends Construct {
       const id = 'EmailForwardingRule-' + idx;
       this.emailForwardingMappings.push({
         emailForwardingRule: new EmailForwardingRule(this, id, {
-          id: siteName + '-rule',
+          id: siteName,
           ruleSet: ruleSet,
           domainName: domainName,
           fromPrefix: emailForwardingProps.fromPrefix,

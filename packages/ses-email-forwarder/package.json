@@ -22,7 +22,6 @@
     "aws-sdk": "^2.858.0"
   },
   "bundledDependencies": [
-    "@seeebiii/ses-verify-identities",
     "aws-lambda",
     "aws-lambda-ses-forwarder",
     "aws-sdk",
@@ -47,6 +46,7 @@
     "typescript": "~3.9.7"
   },
   "peerDependencies": {
+    "@seeebiii/ses-verify-identities": "^4.0.0",
     "aws-cdk-lib": "^2.10.0",
     "constructs": "^10.0.59"
   },
