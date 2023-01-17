@@ -220,7 +220,7 @@ export class EmailForwardingRule extends Construct {
     bucketPrefix: string,
   ) {
     return new Function(this, 'EmailForwardingFunction', {
-      runtime: Runtime.NODEJS_12_X,
+      runtime: Runtime.NODEJS_14_X,
       handler: 'index.handler',
       code: Code.fromAsset(path.join(__dirname, 'lambda/build')),
       timeout: Duration.seconds(30),

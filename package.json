@@ -2,6 +2,9 @@
   "name": "macmannes-cdk-constructs",
   "private": true,
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "aws-cdk-lib": "2.22.0",
+    "jsii": "1.52.1",
+    "@seeebiii/ses-verify-identities": "^4.0.0"
   }
 }
